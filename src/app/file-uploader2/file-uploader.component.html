@@ -1,0 +1,120 @@
+<div class="ui-kit-upload {{ isCarousel ? 'view-carousel' : '' }} ">
+  <div class="container-upload">
+    <div class="content-show-upload">
+      <article class="select-or-drag">
+        <ui-kit-icon
+          *ngIf="!isCarousel"
+          [size]="'large'"
+          [name]="'upload'"
+        ></ui-kit-icon>
+        <small *ngIf="!isCarousel" class="highlight">Select</small>
+        <small *ngIf="!isCarousel">or drag files here</small>
+        <div *ngIf="isCarousel" class="container-upload-more">
+          <div class="upload-more">
+            <ui-kit-icon
+              *ngIf="isCarousel"
+              [size]="'large'"
+              [name]="'upload'"
+            ></ui-kit-icon>
+            <small *ngIf="isCarousel">Upload more</small>
+          </div>
+        </div>
+      </article>
+      <article class="description">
+        <small>{{ description }}</small>
+      </article>
+    </div>
+    <p-fileUpload
+      #createUploader
+      name="file[]"
+      [url]="url"
+      [multiple]="multiple"
+      [auto]="auto"
+      [showCancelButton]="false"
+      [showUploadButton]="false"
+      [customUpload]="customUpload"
+      [method]="method"
+      [disabled]="disabled"
+      [maxFileSize]="maxFileSize"
+      [fileLimit]="fileLimit"
+      [styleClass]="styleClass"
+      [files]="files"
+      (onSelect)="onSelect($event)"
+      (onRemove)="onRemove($event)"
+      (onBeforeUpload)="onBeforeUpload($event)"
+      (onUpload)="onUpload($event)"
+      (onError)="onError($event)"
+      (onClear)="onClear($event)"
+      (onProgress)="onProgress($event)"
+      (uploadHandler)="uploadHandler($event)"
+    >
+      <ng-template pTemplate="toolbar">
+        <ui-kit-button
+          *ngIf="!auto && createUploader.hasFiles()"
+          [disabled]="createUploader._files.length === 0"
+          [icon]="'cloud-upload'"
+          [label]="'Upload'"
+          [onClick]="uploadClone.bind(this, createUploader)"
+        ></ui-kit-button>
+        <ui-kit-button
+          *ngIf="!auto && createUploader.hasFiles()"
+          [disabled]="!createUploader.hasFiles()"
+          [icon]="'cancel'"
+          [color]="'secondary'"
+          [label]="'Cancel'"
+          [onClick]="cancelClone.bind(this, createUploader)"
+        ></ui-kit-button>
+        <ui-kit-button
+          *ngIf="!isCarousel && auto && createUploader.hasFiles()"
+          [disabled]="!createUploader.hasFiles()"
+          [icon]="'cancel'"
+          [color]="'secondary'"
+          [onClick]="cancelClone.bind(this, createUploader)"
+        ></ui-kit-button>
+      </ng-template>
+      <ng-template let-file pTemplate="file"> </ng-template>
+    </p-fileUpload>
+  </div>
+
+  <div class="list-chip-files" *ngIf="typeTemplate === 'chip'">
+    <ui-kit-chip
+      *ngFor="let file of createUploader._files"
+      [removable]="!auto"
+      [removeIcon]="!auto ? 'cancel' : ''"
+      [icon]="'attachment'"
+      label="{{ file.name }} -  {{
+        getSizeInMegaBytes(file) | number: '1.2-2'
+      }} MB"
+      [color]="severity === 'danger' ? 'error' : severity"
+      (removeEvent)="removeFile($event, file, createUploader)"
+    >
+    </ui-kit-chip>
+  </div>
+
+  <div
+    class="list-thumbnail-files"
+    *ngIf="typeTemplate === 'thumbnail' && urls.length > 0"
+  >
+    <ui-kit-thumbnail
+      *ngFor="let file of createUploader._files; index as i"
+      [icon]="!createUploader.isImage(file) ? 'attachment' : null"
+      [onClickBadge]="removeFile.bind(this, {}, file, createUploader)"
+      [severity]="severity"
+      [badgeIcon]="!auto ? 'cloud-error' : ''"
+      [badgeValue]="''"
+      [isCircle]="thumbnailIsCircle"
+    >
+      <ng-container viewContent *ngIf="createUploader.isImage(file)">
+        <img [src]="urls[i]" alt="" />
+      </ng-container>
+    </ui-kit-thumbnail>
+  </div>
+</div>
+<div class="ui-kit-error-uploader" *ngIf="error">
+  <ui-kit-message
+    [badgeValue]="'!'"
+    [severity]="'danger'"
+    [text]="error.message"
+    [hierarchy]="'quiet'"
+  ></ui-kit-message>
+</div>
