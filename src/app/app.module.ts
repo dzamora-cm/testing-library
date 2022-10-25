@@ -13,10 +13,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { InputTextModule } from 'primeng/inputtext';
 import { TreeTableModule } from 'primeng/treetable';
 import { InplaceModule } from 'primeng/inplace';
-import { FileUploader2Component } from './file-uploader2/file-uploader.component';
 import { AvatarModule } from 'primeng/avatar';
 @NgModule({
-  declarations: [AppComponent, FileUploader2Component],
+  declarations: [AppComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
