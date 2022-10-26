@@ -1,9 +1,5 @@
 import { Component, ViewEncapsulation, Input } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -12,29 +8,43 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  @Input() controlNameDropdown: any = 'controlNameDropdown';
-  @Input() formGroup: UntypedFormGroup;
+
+  menuItems: MenuItem[] = [
+    {
+      label: `Home`,
+      icon: 'pi pi-question-circle',
+      routerLink: 'home'
+    },
+    {
+      label: `Components`,
+      icon: 'pi pi-question-circle',
+      routerLink: 'components'
+    },
+    {
+      label: `Features`,
+      icon: 'pi pi-question-circle',
+      routerLink: 'features'
+    },
+    {
+      label: `Error`,
+      icon: 'pi pi-question-circle',
+      routerLink: 'error'
+    },
+    {
+      label: `Resources`,
+      icon: 'pi pi-question-circle',
+      routerLink: 'resources'
+    },
+    {
+      label: `Help`,
+      icon: 'pi pi-question-circle',
+      routerLink: 'help'
+    }
+  ];
 
   constructor() {
-    this.formGroup = new UntypedFormBuilder().group({
-      name: new UntypedFormControl('Daniel Zamora'),
-      phone: new UntypedFormControl(3208765384),
-      gender: new UntypedFormControl(),
-      country: new UntypedFormControl(),
-      address: new UntypedFormControl(),
-      city: new UntypedFormControl(),
-      destiny: new UntypedFormControl(),
-      description: new UntypedFormControl(),
-      selection1: new UntypedFormControl(),
-      selection2: new UntypedFormControl(),
-      range: new UntypedFormControl(),
-      state: new UntypedFormControl(),
-    });
   }
 
   ngOnInit(): void {
-    this.formGroup.valueChanges.subscribe((val) => {
-      console.log(val, this.formGroup);
-    });
   }
 }

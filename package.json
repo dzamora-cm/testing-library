@@ -18,11 +18,12 @@
     "@angular/platform-browser": "^14.1.1",
     "@angular/platform-browser-dynamic": "^14.1.1",
     "@angular/router": "^14.1.1",
-    "ui-kit": "file:../story-book/ui-kit/dist/ui-kit",
+    "cmt-molecules": "^0.0.6",
     "primeicons": "^5.0.0",
     "primeng": "^14.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "ui-kit": "^1.0.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
